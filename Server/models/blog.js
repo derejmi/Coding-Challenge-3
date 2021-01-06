@@ -5,7 +5,7 @@ class Blog {
   constructor(data) {
     this.id = data.id;
     this.title = data.title;
-    this.message = data.message;
+    this.messages = data.messages;
     this.link = data.link;
     this.date = new Date();
   }
@@ -39,11 +39,11 @@ class Blog {
   }
 
   //create
-  static create(title, message, link) {
+  static create(title, messages, link) {
     return new Promise(async (resolve, reject) => {
       try {
         const blogData = await db.run(
-          SQL`INSERT INTO blogs (title, message, link) VALUES (${title}, ${message}, ${link}) RETURNING *`
+          SQL`INSERT INTO blogs (title, messages, link) VALUES (${title}, ${messages}, ${link}) RETURNING *`
         );
         const newBlog = new Blog(blogData.rows[0]);
 

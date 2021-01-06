@@ -30,7 +30,7 @@ router.post("/", async (req, res) => {
   try {
     const createdBlog = await Blog.create(
       req.body.title,
-      req.body.message,
+      req.body.messages,
       req.body.link
     );
     res.status(201).json(createdBlog);

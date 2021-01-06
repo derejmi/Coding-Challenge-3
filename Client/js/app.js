@@ -14,7 +14,7 @@ getAllPosts();
 // DOGS FLOW
 // index
 function getAllPosts(){
-    fetch('http://localhost:3000/posts')
+    fetch('http://localhost:3000/blogs')
         .then(r => r.json())
         .then(appendPosts)
         .catch(console.warn)
@@ -24,10 +24,15 @@ function getAllPosts(){
 function submitPost(e){
     e.preventDefault();
 
+    let title = e.target.title.value
+    let messages = e.target.messages.value
+
+    const checkedTitle = title ? title : null;
+    const checkedMessage = messages ? messages : null;
+    
     const postData = {
-        title: e.target.title.value,
-        author: e.target.author.value,
-        message: e.target.message.value,
+        title: checkedTitle,
+        messages: checkedMessage,
         link: e.target.link.value
     };
 
@@ -37,7 +42,7 @@ function submitPost(e){
         headers: { "Content-Type": "application/json" }
     };
 
-    fetch('http://localhost:3000/posts', options)
+    fetch('http://localhost:3000/blogs', options)
         .then(r => r.json())
         .then(appendPost)
         .then(() => e.target.reset())
@@ -46,7 +51,7 @@ function submitPost(e){
 
 // helpers
 function appendPosts(data){
-    data.posts.forEach(appendPost);
+    data.forEach(appendPost);
 };
 
 function appendPost(postData){
@@ -58,18 +63,22 @@ function appendPost(postData){
 
 function formatPostDiv(post, div){
     const titleH1 = document.createElement('h1');
-    const authorH2 = document.createElement('h2');
     const messageP = document.createElement('p');
     const linkDiv = document.createElement('div');
+    const dateSub = document.createElement('sub')
+    const iframe = document.createElement('iframe');
+    iframe.src=post.link
+
     titleH1.textContent =post.title
-    authorH2.textContent = post.author
-    messageP.textContent = post.message
-    linkDiv.textContent = post.link
+    messageP.textContent = post.messages
+    dateSub.textContent = post.date
+
 
     div.append(titleH1)
-    div.append(authorH2)
     div.append(messageP)
     div.append(linkDiv)
+    if(post.link){div.append(iframe)}
+    div.append(dateSub)
 
     return div
 }

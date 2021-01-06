@@ -1,0 +1,26 @@
+h1 {
+    font-family: 'Audiowide', cursive;
+}
+
+#Publish {
+    position: absolute;
+    right: 0;
+}
+
+#new-posts-form {
+    margin: auto;
+    width: 25%;
+    padding: 10px;
+}
+
+div {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+sub {
+    display: block;
+    padding: 10px;
+    margin: auto;
+}
+
