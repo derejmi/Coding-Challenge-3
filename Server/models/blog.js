@@ -15,7 +15,6 @@ class Blog {
     return new Promise(async (resolve, reject) => {
       try {
         const blogData = await db.run(SQL`SELECT * FROM blogs;`);
-        console.log(blogData, "blogData");
         const blogs = blogData.rows.map((blog) => new Blog(blog));
         resolve(blogs);
       } catch (err) {
@@ -28,8 +27,10 @@ class Blog {
   static findByID(id) {
     return new Promise(async (resolve, reject) => {
       try {
-        const blogData = await db.run(`SELECT * FROM blogs WHERE id = 1;`);
+        const blogData = await db.run(`SELECT * FROM blogs WHERE id = ${id};`);
+        console.log(blogData, "blogData2");
         let blog = new Blog(blogData.rows[0]);
+        console.log(blog, "blog");
         resolve(blog);
       } catch (err) {
         reject("Blog not found");

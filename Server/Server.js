@@ -16,4 +16,4 @@ const blogRoutes = require("./controllers/blogs");
 server.use("/blogs", blogRoutes);
 
 //Root route
-server.get("/", (req, res) => res.send("Hi"));
+server.get("/", (req, res) => res.send("Welcome to our anonymous blog site"));

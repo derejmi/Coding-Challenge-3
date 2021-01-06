@@ -14,19 +14,26 @@ router.get("/", async (req, res) => {
   }
 });
 
+//Specific Blog Show route
 router.get("/:id", async (req, res) => {
   try {
-    const specificBlog = await Blog.findByID(1);
-    res.status(200).res.json(specificBlog);
+    const id = parseInt(req.params.id);
+    const specificBlog = await Blog.findByID(id);
+    res.status(200).json(specificBlog);
   } catch (err) {
-    res.status(404).res.send({ err });
+    res.status(404).send({ err });
   }
 });
 
+//Create Blog Route
 router.post("/", async (req, res) => {
   try {
-    const createdBlog = await Blog.create();
-    res.status(201).res.json(createdBlog);
+    const createdBlog = await Blog.create(
+      req.body.title,
+      req.body.message,
+      req.body.link
+    );
+    res.status(201).json(createdBlog);
   } catch (err) {
     res.status(400).send({ err });
   }
