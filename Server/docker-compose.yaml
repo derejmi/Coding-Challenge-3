@@ -1,0 +1,37 @@
+#This a .yaml file
+
+#version of the docker compose file were using, when the docker container starts it automatically cds into /server
+version: "3"
+services:
+  server:
+    image: node:12.18.4
+    working_dir: /server
+    ports:
+      - 3000:3000
+    environment:
+      - PGUSER=futureproof
+      - PGHOST=db
+      - PGPASSWORD=shelterpass
+      - PGDATABASE=blogsite
+      - PGPORT=5432
+    depends_on:
+      - db
+    volumes:
+      - type: bind
+        source: ./
+        target: /server
+    command: bash -c "npm install && npm start"
+
+  db:
+    image: postgres:12-alpine
+    ports:
+      - 35432:5432
+    volumes:
+      - "dbdata1:/var/lib/postgresql/data"
+      - "./db/seeds.sql:/docker-entrypoint-initdb.d/seeds.sql:ro"
+    environment:
+      - POSTGRES_DB=blogsite
+      - POSTGRES_USER=futureproof
+      - POSTGRES_PASSWORD=shelterpass
+volumes:
+  dbdata1:
